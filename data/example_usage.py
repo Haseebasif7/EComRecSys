@@ -12,6 +12,11 @@ from torch.utils.data import DataLoader, random_split
 import torch
 import sys
 import matplotlib.pyplot as plt
+from pathlib import Path
+
+# Add parent directory to path to import config
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from config import CSV_PATH, IMAGE_DIR
 
 def show_tensor_image(tensor):

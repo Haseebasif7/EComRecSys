@@ -1,9 +1,15 @@
 import os
+import sys
 import pandas as pd
 from PIL import Image
 import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
+from pathlib import Path
+
+# Add parent directory to path to import config
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from config import CSV_PATH, IMAGE_DIR
 
 class StyleImageDataset(Dataset):

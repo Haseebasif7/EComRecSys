@@ -1,7 +1,12 @@
 import os
+import sys
 import pandas as pd
 import shutil
 from pathlib import Path
+
+# Add parent directory to path to import config
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from config import CSV_PATH, IMAGE_DIR
 # Paths
 script_dir = Path(__file__).parent
@@ -9,12 +14,12 @@ csv_path = CSV_PATH
 image_dir = IMAGE_DIR
 
 # Create output folders in the same directory as this script
-watches_folder = script_dir / "watches"
-bracelets_folder = script_dir / "bracelets"
+watches_folder = script_dir / "data" / "watches"
+bracelets_folder = script_dir / "data" / "bracelets"
 
-# Create folders if they don't exist
-watches_folder.mkdir(exist_ok=True)
-bracelets_folder.mkdir(exist_ok=True)
+# Create folders if they don't exist (parents=True creates parent directories too)
+watches_folder.mkdir(parents=True, exist_ok=True)
+bracelets_folder.mkdir(parents=True, exist_ok=True)
 
 print("="*70)
 print("Copying raw images for watches and bracelets")
