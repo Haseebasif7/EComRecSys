@@ -12,6 +12,7 @@ from torch.utils.data import DataLoader, random_split
 import torch
 import sys
 import matplotlib.pyplot as plt
+from config import CSV_PATH, IMAGE_DIR
 
 def show_tensor_image(tensor):
     from PIL import Image
@@ -45,8 +46,8 @@ def get_class_distribution(dataset):
 def main():
     # Dataset paths
     split_ratio = 0.9
-    csv_path = "/Users/haseeb/.cache/kagglehub/datasets/olgabelitskaya/style-color-images/versions/3/style/style_filtered.csv"
-    image_dir = "/Users/haseeb/.cache/kagglehub/datasets/olgabelitskaya/style-color-images/versions/3/style"
+    csv_path = CSV_PATH
+    image_dir = IMAGE_DIR
 
     # Create datasets with appropriate transforms
     train_transform = get_default_transform(image_size=224, is_training=True)

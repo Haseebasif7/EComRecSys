@@ -1,8 +1,8 @@
 import pandas as pd
 import os
-
+from config import CSV_PATH, IMAGE_DIR
 # Path to the original CSV
-csv_path = "/Users/haseeb/.cache/kagglehub/datasets/olgabelitskaya/style-color-images/versions/3/style/style.csv"
+csv_path = CSV_PATH
 
 # Read the CSV
 df = pd.read_csv(csv_path)
@@ -11,7 +11,7 @@ df = pd.read_csv(csv_path)
 df_filtered = df[['file', 'product_name']]
 
 # Save the filtered CSV
-output_path = "/Users/haseeb/.cache/kagglehub/datasets/olgabelitskaya/style-color-images/versions/3/style/style_filtered.csv"
+output_path = CSV_PATH.replace(".csv", "_filtered.csv")
 df_filtered.to_csv(output_path, index=False)
 
 print(f"Filtered CSV saved to: {output_path}")

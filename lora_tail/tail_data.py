@@ -2,11 +2,11 @@ import os
 import pandas as pd
 import shutil
 from pathlib import Path
-
+from config import CSV_PATH, IMAGE_DIR
 # Paths
 script_dir = Path(__file__).parent
-csv_path = "/Users/haseeb/.cache/kagglehub/datasets/olgabelitskaya/style-color-images/versions/3/style/style_filtered.csv"
-image_dir = "/Users/haseeb/.cache/kagglehub/datasets/olgabelitskaya/style-color-images/versions/3/style"
+csv_path = CSV_PATH
+image_dir = IMAGE_DIR
 
 # Create output folders in the same directory as this script
 watches_folder = script_dir / "watches"

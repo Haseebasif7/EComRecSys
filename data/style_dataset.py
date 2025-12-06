@@ -4,7 +4,7 @@ from PIL import Image
 import torch
 from torch.utils.data import Dataset
 from torchvision import transforms
-
+from config import CSV_PATH, IMAGE_DIR
 
 class StyleImageDataset(Dataset):
     """
@@ -108,8 +108,8 @@ def get_default_transform(image_size=224, is_training=True):
 
 if __name__ == "__main__":
     # Example usage
-    csv_path = "/Users/haseeb/.cache/kagglehub/datasets/olgabelitskaya/style-color-images/versions/3/style/style_filtered.csv"
-    image_dir = "/Users/haseeb/.cache/kagglehub/datasets/olgabelitskaya/style-color-images/versions/3/style"
+    csv_path = CSV_PATH
+    image_dir = IMAGE_DIR
     
     # Create dataset with training transforms
     train_transform = get_default_transform(image_size=224, is_training=True)
