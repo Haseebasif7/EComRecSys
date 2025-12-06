@@ -1,0 +1,6 @@
+kagglehub
+pandas
+torch
+torchvision
+pillow
+tqdm
