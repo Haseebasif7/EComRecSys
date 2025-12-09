@@ -473,7 +473,7 @@ def main():
         weight_dtype = torch.bfloat16
 
     if args.use_peft:
-        from peft import LoraConfig, LoraModel, get_peft_model_state_dict, set_peft_model_state_dict
+        from peft import LoraConfig, get_peft_model, get_peft_model_state_dict, set_peft_model_state_dict
 
         UNET_TARGET_MODULES = ["to_q", "to_v", "query", "value"]
         TEXT_ENCODER_TARGET_MODULES = ["q_proj", "v_proj"]
@@ -485,7 +485,7 @@ def main():
             lora_dropout=args.lora_dropout,
             bias=args.lora_bias,
         )
-        unet = LoraModel(config, unet)
+        unet = get_peft_model(unet, config)
 
         vae.requires_grad_(False)
         if args.train_text_encoder:
@@ -496,7 +496,7 @@ def main():
                 lora_dropout=args.lora_text_encoder_dropout,
                 bias=args.lora_text_encoder_bias,
             )
-            text_encoder = LoraModel(config, text_encoder)
+            text_encoder = get_peft_model(text_encoder, config)
     else:
         # freeze parameters of models to save more memory
         unet.requires_grad_(False)
@@ -972,13 +972,15 @@ def main():
                 k.replace("text_encoder_", ""): v for k, v in lora_checkpoint_sd.items() if "text_encoder_" in k
             }
 
+            from peft import get_peft_model
+            
             unet_config = LoraConfig(**lora_config["peft_config"])
-            pipe.unet = LoraModel(unet_config, pipe.unet)
+            pipe.unet = get_peft_model(pipe.unet, unet_config)
             set_peft_model_state_dict(pipe.unet, unet_lora_ds)
 
             if "text_encoder_peft_config" in lora_config:
                 text_encoder_config = LoraConfig(**lora_config["text_encoder_peft_config"])
-                pipe.text_encoder = LoraModel(text_encoder_config, pipe.text_encoder)
+                pipe.text_encoder = get_peft_model(pipe.text_encoder, text_encoder_config)
                 set_peft_model_state_dict(pipe.text_encoder, text_encoder_lora_ds)
 
             if dtype in (torch.float16, torch.bfloat16):

@@ -28,7 +28,8 @@ RESOLUTION=512              # Standard SD resolution
 
 # Memory optimization flags
 # Note: gradient_checkpointing is a flag (no value needed)
-MIXED_PRECISION="fp16"       # Use fp16 if MPS supports it, else remove this flag
+# MPS (Metal) on macOS doesn't support fp16 well - set to "no" for MPS
+MIXED_PRECISION="no"         # Use "no" for MPS/Metal, "fp16" for CUDA
 DATALOADER_WORKERS=0         # macOS multiprocessing issues (0 recommended)
 
 # Validation settings - Less frequent to save memory
@@ -52,8 +53,11 @@ echo "LoRA rank: $LORA_R, alpha: $LORA_ALPHA"
 echo "=========================================="
 echo ""
 
+# Suppress multiprocessing warnings on macOS
+export PYTHONWARNINGS="ignore::UserWarning"
+
 # Run training
-python lora_tail/train_text_to_image_lora.py \
+python -W ignore::UserWarning lora_tail/train_text_to_image_lora.py \
   --pretrained_model_name_or_path="$MODEL" \
   --train_data_dir="$DATA_DIR" \
   --output_dir="$OUTPUT_DIR" \
@@ -74,7 +78,6 @@ python lora_tail/train_text_to_image_lora.py \
   --validation_epochs=$VALIDATION_EPOCHS \
   --checkpointing_steps=$CHECKPOINT_STEPS \
   --seed=$SEED \
-  --report_to="wandb"
 
 echo ""
 echo "=========================================="

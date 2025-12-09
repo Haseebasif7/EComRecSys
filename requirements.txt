@@ -9,5 +9,10 @@ transformers>=4.25.1
 datasets
 ftfy
 Jinja2
+diffusers>=0.14.0
 git+https://github.com/huggingface/peft.git
 wandb
+# Image similarity search dependencies
+faiss-cpu
+streamlit
+numpy
