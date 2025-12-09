@@ -10,3 +10,4 @@ datasets
 ftfy
 Jinja2
 git+https://github.com/huggingface/peft.git
+wandb
