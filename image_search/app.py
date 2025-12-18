@@ -165,15 +165,6 @@ def main():
                 st.error(f"Error displaying image: {e}")
                 query_image = None
         
-        with col2:
-            st.info("""
-            **How it works:**
-            1. Your image is processed through a pre-trained ResNet50 model
-            2. Feature embeddings are extracted
-            3. Similar images are found using cosine similarity
-            4. Results are ranked by similarity score
-            """)
-        
         # Search button
         if st.button("🔍 Search Similar Images", type="primary"):
             with st.spinner("Searching for similar images..."):

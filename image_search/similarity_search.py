@@ -102,7 +102,15 @@ class ImageSimilaritySearch:
             'results': []
         }
         
+        # For cosine similarity, the query image itself will typically have similarity ~1.0.
+        # We usually don't want to return the exact query item as a result, so we skip the
+        # top-1 result if its similarity is extremely close to 1.
+        self_match_threshold = 0.9999
+
         for i, (dist, idx, path) in enumerate(zip(distances, indices, paths)):
+            if i == 0 and dist >= self_match_threshold:
+                continue
+
             result = {
                 'rank': i + 1,
                 'image_path': path,
@@ -214,8 +222,15 @@ class ImageSimilaritySearch:
             'query_path': 'uploaded_image',
             'results': []
         }
-        
+
+        # Same self-match skipping logic as in search_similar
+        self_match_threshold = 0.9999
+
         for i, (dist, idx, path) in enumerate(zip(distances, indices, paths)):
+            # Skip likely self-match (query image itself, if it also exists in the index)
+            if i == 0 and dist >= self_match_threshold:
+                continue
+
             # Skip invalid indices (FAISS can return -1 for empty results)
             if idx < 0 or idx >= len(self.db.image_paths):
                 continue
