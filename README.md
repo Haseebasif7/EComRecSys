@@ -1,4 +1,4 @@
-## EComRecSys – Tail‑Aware Visual Recommendation Toolkit
+## EComRecSys – Tail Aware Visual Recommendation Toolkit
 
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red.svg)](https://pytorch.org/)
